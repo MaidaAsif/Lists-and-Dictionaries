@@ -1,0 +1,191 @@
+# smart_grocery_store.py
+"""Smart Grocery Store Management System."""
+
+LOW_STOCK_LIMIT = 5
+
+# Sample starting data (list of dictionaries)
+products = [
+    {"id": 101, "name": "Milk", "category": "Dairy", "price": 250.0, "stock": 20},
+    {"id": 102, "name": "Bread", "category": "Bakery", "price": 120.0, "stock": 4},
+]
+sales = []
+
+
+def get_number(prompt, minimum, number_type=int):
+    # Ask until a valid number of the given type is at least the minimum.
+    while True:
+        try:
+            value = number_type(input(prompt))
+            if value >= minimum:
+                return value
+        except ValueError:
+            pass
+        print(f"Invalid input. Enter a number of at least {minimum}.")
+
+
+def get_text(prompt):
+    # Ask until a non-empty text value is entered.
+    while True:
+        text = input(prompt).strip()
+        if text:
+            return text
+        print("This field cannot be empty.")
+
+
+def find_by_id(product_id):
+    # Return the product with the given ID, or None if it does not exist.
+    for product in products:
+        if product["id"] == product_id:
+            return product
+    return None
+
+
+def show_product(product):
+    # Print the complete details of one product.
+    print(f"ID: {product['id']} | {product['name']} | {product['category']} | "
+          f"Rs. {product['price']:,.2f} | Stock: {product['stock']}")
+
+
+def add_product():
+    # Add a new product, rejecting duplicate IDs.
+    product_id = get_number("Product ID: ", 1)
+    if find_by_id(product_id):
+        print("A product with this ID already exists.")
+        return
+
+    products.append({
+        "id": product_id,
+        "name": get_text("Product name: ").title(),
+        "category": get_text("Category: ").title(),
+        "price": get_number("Price (Rs.): ", 0.01, float),
+        "stock": get_number("Available stock: ", 0),
+    })
+    print("Product added successfully.")
+
+
+def view_products():
+    # Display all products.
+    if not products:
+        print("No products available.")
+        return
+    print("\n--- ALL PRODUCTS ---")
+    for product in products:
+        show_product(product)
+
+
+def search_product():
+    # Search by ID or by (part of) the product name.
+    query = input("Enter product name or ID: ").strip().lower()
+    matches = [p for p in products
+               if query and (query == str(p["id"]) or query in p["name"].lower())]
+
+    if not matches:
+        print("Product not found.")
+        return
+    for product in matches:
+        show_product(product)
+
+
+def update_stock():
+    # Add stock to a product or set its quantity directly.
+    product = find_by_id(get_number("Product ID: ", 1))
+    if not product:
+        print("Product not found.")
+        return
+
+    choice = input("1. Add stock  2. Set new quantity: ").strip()
+    while choice not in ("1", "2"):
+        choice = input("Please enter 1 or 2: ").strip()
+
+    if choice == "1":
+        product["stock"] += get_number("Quantity to add: ", 1)
+    else:
+        product["stock"] = get_number("New quantity: ", 0)
+
+    print(f"Updated stock of {product['name']}: {product['stock']}")
+
+
+def process_sale():
+    # Sell a product if it exists and has enough stock, then record the sale.
+    product = find_by_id(get_number("Product ID: ", 1))
+    if not product:
+        print("Product not found.")
+        return
+
+    quantity = get_number("Purchase quantity: ", 1)
+    if quantity > product["stock"]:
+        print(f"Sale rejected: only {product['stock']} units available.")
+        return
+
+    total = quantity * product["price"]
+    product["stock"] -= quantity
+    sales.append({"id": product["id"], "name": product["name"],
+                  "quantity": quantity, "total": total})
+
+    print(f"\nPurchase summary: {quantity} x {product['name']} "
+          f"@ Rs. {product['price']:,.2f}")
+    print(f"Total: Rs. {total:,.2f} | Remaining stock: {product['stock']}")
+
+
+def view_sales():
+    # Display all completed sales.
+    if not sales:
+        print("No sales recorded yet.")
+        return
+    print("\n--- SALES RECORDS ---")
+    for sale in sales:
+        print(f"ID: {sale['id']} | {sale['name']} | Qty: {sale['quantity']} | "
+              f"Total: Rs. {sale['total']:,.2f}")
+
+
+def generate_report():
+    # Display the final store report.
+    if not products:
+        print("No products to report on.")
+        return
+
+    low_stock = [p["name"] for p in products if p["stock"] < LOW_STOCK_LIMIT]
+    highest = max(products, key=lambda p: p["price"])
+    lowest = min(products, key=lambda p: p["price"])
+
+    print("\n===== STORE REPORT =====")
+    print(f"Total products:      {len(products)}")
+    print(f"Total stock:         {sum(p['stock'] for p in products)}")
+    print(f"Sales transactions:  {len(sales)}")
+    print(f"Total revenue:       Rs. {sum(s['total'] for s in sales):,.2f}")
+    print(f"Low stock (< {LOW_STOCK_LIMIT}):     {', '.join(low_stock) or 'None'}")
+    print(f"Highest priced:      {highest['name']} (Rs. {highest['price']:,.2f})")
+    print(f"Lowest priced:       {lowest['name']} (Rs. {lowest['price']:,.2f})")
+
+
+def main():
+    actions = {
+        "1": add_product,
+        "2": view_products,
+        "3": search_product,
+        "4": update_stock,
+        "5": process_sale,
+        "6": view_sales,
+        "7": generate_report,
+    }
+
+    while True:
+        print("\n" + "=" * 36)
+        print("SMART GROCERY STORE SYSTEM")
+        print("=" * 36)
+        print("1. Add New Product\n2. View All Products\n3. Search Product")
+        print("4. Update Product Stock\n5. Process Customer Sale")
+        print("6. View Sales Records\n7. Generate Store Report\n8. Exit")
+
+        choice = input("\nEnter your choice: ").strip()
+        if choice == "8":
+            print("Goodbye!")
+            break
+        elif choice in actions:
+            actions[choice]()
+        else:
+            print("Invalid choice. Please enter a number from 1 to 8.")
+
+
+if __name__ == "__main__":
+    main()
