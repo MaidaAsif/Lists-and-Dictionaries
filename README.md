@@ -1,3 +1,5 @@
+![Smart Grocery Store banner](assets/banner.svg)
+
 # Smart Grocery Store Management System
 
 A menu-driven Python application for managing a grocery store's products, stock, and sales, built with lists and dictionaries.
@@ -42,7 +44,7 @@ It stores products and sales as **lists of dictionaries**, validates every input
 | 8. Exit | Ends the program |
 
 ## Live Demo
-`index.html` is an interactive browser preview that mirrors the menu and rules of the Python program, so it can be tried without installing Python.
+`index.html` is an interactive browser preview that mirrors the menu and rules of the Python program, so it can be tried without installing Python. It includes a console, live inventory and sales tables, and summary cards.
 
 - **Online:** https://maidaasif.github.io/Lists-and-Dictionaries/
 - **Offline:** download the repository and open `index.html` in any browser.
@@ -137,6 +139,8 @@ Product not found.
 
 ## Code Structure
 
+![How the program works](assets/menu-flow.svg)
+
 | Function | Responsibility |
 |----------|----------------|
 | `get_number(prompt, minimum, number_type)` | Reads a number, repeating until it is valid and at least the minimum |
@@ -220,6 +224,10 @@ Each case below was run against the program.
 
 ```
 Lists-and-Dictionaries/
+├── assets/
+│   ├── banner.svg                              # README banner
+│   ├── logo.svg                                # Logo and page icon
+│   └── menu-flow.svg                           # Program flow diagram
 ├── Smart  Grocery Store Management System.py   # Python application
 ├── index.html                                  # Browser preview
 └── README.md
