@@ -1,4 +1,4 @@
-![Smart Grocery Store banner](assets/banner.svg)
+![Smart Grocery Store banner](banner.svg)
 
 # Smart Grocery Store Management System
 
@@ -139,7 +139,7 @@ Product not found.
 
 ## Code Structure
 
-![How the program works](assets/menu-flow.svg)
+![How the program works](menu-flow.svg)
 
 | Function | Responsibility |
 |----------|----------------|
@@ -224,7 +224,7 @@ Each case below was run against the program.
 
 ```
 Lists-and-Dictionaries/
-├── assets/
+├── 
 │   ├── banner.svg                              # README banner
 │   ├── logo.svg                                # Logo and page icon
 │   └── menu-flow.svg                           # Program flow diagram
