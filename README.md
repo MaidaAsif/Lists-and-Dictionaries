@@ -1,82 +1,73 @@
 # Smart Grocery Store Management System
 
+A menu-driven Python application for managing a grocery store's products, stock, and sales, built with lists and dictionaries.
+
+**Live demo:** https://maidaasif.github.io/Lists-and-Dictionaries/
+
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![Type](https://img.shields.io/badge/Interface-Command%20Line-lightgrey)
+![Status](https://img.shields.io/badge/Status-Complete-success)
+
+## Table of Contents
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Live Demo](#live-demo)
+4. [Getting Started](#getting-started)
+5. [Usage](#usage)
+6. [Data Model](#data-model)
+7. [Code Structure](#code-structure)
+8. [Input Validation](#input-validation)
+9. [Testing](#testing)
+10. [Design Decisions](#design-decisions)
+11. [Limitations and Future Improvements](#limitations-and-future-improvements)
+12. [Project Structure](#project-structure)
+13. [Author](#author)
+
 ## Overview
-A menu-driven Python application that helps a grocery store owner manage products, stock, and sales. It uses a **list of dictionaries** to store products and a separate **list of dictionaries** to record completed sales. The program keeps running until the user chooses to exit.
+A local grocery store owner needs a simple way to track products, prices, available stock, and daily sales. This application provides that through a command-line menu that keeps running until the user exits.
+
+It stores products and sales as **lists of dictionaries**, validates every input, and prevents invalid operations such as duplicate product IDs or selling more stock than is available.
 
 ## Features
 
 | Menu Option | Description |
 |-------------|-------------|
-| 1. Add New Product | Adds a product (ID, name, category, price, stock) and rejects duplicate IDs |
+| 1. Add New Product | Records a product (ID, name, category, price, stock) and rejects duplicate IDs |
 | 2. View All Products | Lists every product with its category, price, and stock |
-| 3. Search Product | Finds a product by ID or by name (partial names work) |
-| 4. Update Product Stock | Adds stock or sets a new quantity for a product |
-| 5. Process Customer Sale | Checks the product and stock, calculates the total, deducts stock, and records the sale |
+| 3. Search Product | Finds products by ID or by full or partial name, ignoring case |
+| 4. Update Product Stock | Adds stock to a product or sets a new quantity |
+| 5. Process Customer Sale | Verifies the product and stock, calculates the total, deducts stock, and records the sale |
 | 6. View Sales Records | Lists all completed sales |
-| 7. Generate Store Report | Shows totals, low-stock products, and the highest and lowest priced products |
-| 8. Exit | Closes the program |
+| 7. Generate Store Report | Summarises totals, revenue, low-stock products, and the highest and lowest priced items |
+| 8. Exit | Ends the program |
 
-## Data Structures
+## Live Demo
+`index.html` is an interactive browser preview that mirrors the menu and rules of the Python program, so it can be tried without installing Python.
 
-**Product (dictionary):**
+- **Online:** https://maidaasif.github.io/Lists-and-Dictionaries/
+- **Offline:** download the repository and open `index.html` in any browser.
 
-```python
-{"id": 101, "name": "Milk", "category": "Dairy", "price": 250.0, "stock": 20}
-```
+The preview is a JavaScript re-creation built for demonstration. The Python file is the actual application.
 
-**Sales record (dictionary):**
+## Getting Started
 
-```python
-{"id": 101, "name": "Milk", "quantity": 3, "total": 750.0}
-```
+### Requirements
+- Python 3.8 or later (no external libraries needed)
+- Git (optional, for cloning)
 
-Products are stored in the `products` list and sales in the `sales` list.
-
-## Custom Functions
-
-| Function | Purpose |
-|----------|---------|
-| `get_number(prompt, minimum, number_type)` | Asks until a valid number is entered |
-| `get_text(prompt)` | Asks until a non-empty text value is entered |
-| `find_by_id(product_id)` | Returns the product with the given ID, or `None` |
-| `show_product(product)` | Prints the details of one product |
-| `add_product()` | Adds a new product and prevents duplicate IDs |
-| `view_products()` | Displays all products |
-| `search_product()` | Searches by ID or name |
-| `update_stock()` | Adds stock or sets a new quantity |
-| `process_sale()` | Validates and records a customer sale |
-| `view_sales()` | Displays all sales records |
-| `generate_report()` | Displays the store report |
-| `main()` | Runs the menu loop |
-
-## Python Concepts Used
-- Lists and dictionaries, with keys and values to access data
-- `.append()` to add products and sales
-- `for` loops to process product and sales records
-- `while` loop for the menu
-- Conditional statements: `if`, `elif`, `else`
-- List comprehensions, `max()`, `min()`, `sum()`, and `len()`
-- A dictionary of functions to map menu choices to actions
-- `try` / `except` for invalid input
-- f-strings for formatted output
-
-## How to Run
-
-**Requirements:** Python 3.8 or later.
+### Installation and Run
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
-cd YOUR-REPOSITORY
-python smart_grocery_store.py
+git clone https://github.com/MaidaAsif/Lists-and-Dictionaries.git
+cd Lists-and-Dictionaries
+python "Smart  Grocery Store Management System.py"
 ```
 
-Use `python3` or `py` if `python` is not recognized.
+Use `python3` (macOS/Linux) or `py` (Windows) if `python` is not recognised. The file name contains spaces, so keep the quotes around it.
 
-The program starts with two sample products (Milk and Bread), so you can test every option immediately.
+The program starts with two sample products (Milk and Bread), so every feature can be tested immediately.
 
-## Sample Execution
-
-### Menu
+## Usage
 
 ```
 ====================================
@@ -94,81 +85,24 @@ SMART GROCERY STORE SYSTEM
 Enter your choice:
 ```
 
-### View all products (option 2)
+### Example session
 
 ```
+Enter your choice: 2
+
 --- ALL PRODUCTS ---
 ID: 101 | Milk | Dairy | Rs. 250.00 | Stock: 20
 ID: 102 | Bread | Bakery | Rs. 120.00 | Stock: 4
-```
 
-### Add a product (option 1)
-
-```
-Product ID: 103
-Product name: rice
-Category: grains
-Price (Rs.): 180
-Available stock: 50
-Product added successfully.
-```
-
-Entering an existing ID, such as 101, gives:
-
-```
-A product with this ID already exists.
-```
-
-### Search a product (option 3)
-
-```
-Enter product name or ID: milk
-ID: 101 | Milk | Dairy | Rs. 250.00 | Stock: 20
-```
-
-A name or ID that does not exist gives:
-
-```
-Product not found.
-```
-
-### Update stock (option 4)
-
-```
-Product ID: 102
-1. Add stock  2. Set new quantity: 1
-Quantity to add: 10
-Updated stock of Bread: 14
-```
-
-### Process a sale (option 5)
-
-```
+Enter your choice: 5
 Product ID: 101
 Purchase quantity: 3
 
 Purchase summary: 3 x Milk @ Rs. 250.00
 Total: Rs. 750.00 | Remaining stock: 17
-```
 
-A quantity larger than the stock is rejected, for example 10 units of Bread when 4 are available:
+Enter your choice: 7
 
-```
-Sale rejected: only 4 units available.
-```
-
-### View sales records (option 6)
-
-```
---- SALES RECORDS ---
-ID: 101 | Milk | Qty: 3 | Total: Rs. 750.00
-```
-
-### Store report (option 7)
-
-After the sale above, starting from the original sample data:
-
-```
 ===== STORE REPORT =====
 Total products:      2
 Total stock:         21
@@ -179,24 +113,118 @@ Highest priced:      Milk (Rs. 250.00)
 Lowest priced:       Bread (Rs. 120.00)
 ```
 
-## Input Validation
-- Product ID, stock, and quantities must be whole numbers
-- Price must be a number greater than zero
-- Product ID must be unique
-- Name and category cannot be empty
-- Sales are rejected if the product does not exist or the stock is insufficient
-- Invalid menu choices and invalid numbers prompt the user to try again
+### Rejected operations
 
-## Note
-Data is stored in memory only. Products added and sales made during a session are lost when the program exits, and the program starts again with the two sample products.
+```
+A product with this ID already exists.
+Sale rejected: only 4 units available.
+Product not found.
+```
+
+## Data Model
+
+**Product** (stored in the `products` list):
+
+```python
+{"id": 101, "name": "Milk", "category": "Dairy", "price": 250.0, "stock": 20}
+```
+
+**Sales record** (stored in the `sales` list):
+
+```python
+{"id": 101, "name": "Milk", "quantity": 3, "total": 750.0}
+```
+
+## Code Structure
+
+| Function | Responsibility |
+|----------|----------------|
+| `get_number(prompt, minimum, number_type)` | Reads a number, repeating until it is valid and at least the minimum |
+| `get_text(prompt)` | Reads text, repeating until it is not empty |
+| `find_by_id(product_id)` | Returns the matching product, or `None` |
+| `show_product(product)` | Prints one product's details |
+| `add_product()` | Creates a product and blocks duplicate IDs |
+| `view_products()` | Displays all products |
+| `search_product()` | Searches by ID or name |
+| `update_stock()` | Adds stock or sets a new quantity |
+| `process_sale()` | Validates, completes, and records a sale |
+| `view_sales()` | Displays all sales |
+| `generate_report()` | Produces the store report |
+| `main()` | Runs the menu loop and dispatches to the functions above |
+
+### Python concepts demonstrated
+- Lists and dictionaries, accessed through keys and values
+- `.append()`, `len()`, `sum()`, `max()`, `min()`
+- `for` loops over product and sales records, and a `while` loop for the menu
+- Conditional statements (`if`, `elif`, `else`)
+- List comprehensions and `lambda` key functions
+- A dictionary that maps menu choices to functions
+- `try` / `except` for invalid input
+- f-strings for formatted output
+
+## Input Validation
+
+| Field | Rule |
+|-------|------|
+| Product ID | Whole number of at least 1, unique |
+| Name, category | Cannot be empty or only spaces; cleaned with `.strip()` and `.title()` |
+| Price | Number greater than 0 |
+| Stock, new quantity | Whole number of at least 0 |
+| Quantity to add, purchase quantity | Whole number of at least 1 |
+| Menu choice | Number from 1 to 8 |
+
+Invalid input never crashes the program. It shows a message and asks again.
+
+## Testing
+Each case below was run against the program.
+
+| # | Scenario | Expected result |
+|---|----------|-----------------|
+| 1 | Menu choice `9`, `abc`, or empty | "Invalid choice" message, menu shows again |
+| 2 | Add ID `101` (already exists) | "A product with this ID already exists." |
+| 3 | Add ID `0`, `-5`, `abc`, or `1.5` | "Invalid input", asks again |
+| 4 | Name or category of only spaces | "This field cannot be empty." |
+| 5 | Price `0`, `-10`, or `abc` | Rejected, asks again |
+| 6 | Stock `0` when adding a product | Accepted |
+| 7 | Name `  green TEA ` | Saved as `Green Tea` |
+| 8 | Search `mil` or `MILK` | Finds Milk |
+| 9 | Search empty, `999`, or `xyz` | "Product not found." |
+| 10 | Update stock for ID `999` | "Product not found." |
+| 11 | Add stock `0` or `-4` | Rejected (minimum is 1) |
+| 12 | Set new quantity `0` | Accepted |
+| 13 | Sale quantity `0`, `-2`, or `abc` | Rejected, asks again |
+| 14 | Sell 5 Bread when stock is 4 | "Sale rejected: only 4 units available." Nothing changes |
+| 15 | Sell exactly 4 Bread when stock is 4 | Accepted: Rs. 480.00, remaining stock 0 |
+| 16 | Sell any Bread when stock is 0 | "Sale rejected: only 0 units available." |
+| 17 | View sales before any sale | "No sales recorded yet." |
+| 18 | Report with no sales | Transactions `0`, revenue `Rs. 0.00` |
+| 19 | Product with stock exactly `5` | Not listed as low stock |
+| 20 | Product with stock `4` or less | Listed as low stock |
+| 21 | Two products share the lowest price | The first one added is shown |
+| 22 | Rejected sale | Not counted in transactions or revenue |
+
+## Design Decisions
+- **List of dictionaries.** Each product's details stay together, so one product's price cannot be mixed up with another's name.
+- **Checks before changes.** A sale is validated completely before stock is deducted or a record is created, so a rejected sale leaves no trace.
+- **Low stock means below 5.** A product with exactly 5 units is not flagged, following the requirement "below 5 units".
+- **One reusable input function.** `get_number()` handles all numeric validation, which avoids repeated code.
+- **Dictionary-based menu.** Mapping choices to functions keeps `main()` short and makes adding an option a one-line change.
+
+## Limitations and Future Improvements
+- Data is held in memory only, so products and sales are lost when the program exits. Saving to a CSV or JSON file is the natural next step.
+- Products cannot be edited or deleted after being added.
+- Sales do not record a date or time.
+- A sale covers one product at a time, with no multi-item cart.
 
 ## Project Structure
 
 ```
-YOUR-REPOSITORY/
-├── smart_grocery_store.py
+Lists-and-Dictionaries/
+├── Smart  Grocery Store Management System.py   # Python application
+├── index.html                                  # Browser preview
 └── README.md
 ```
 
 ## Author
-Maida Asif
+**Maida Asif**
+GitHub: [@MaidaAsif](https://github.com/MaidaAsif)
