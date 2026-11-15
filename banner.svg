@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-labelledby="t d">
+  <title id="t">Smart Grocery Store Management System</title>
+  <desc id="d">Banner for a Python grocery store management project</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f766e"/>
+      <stop offset="1" stop-color="#0c4a6e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="300" rx="18" fill="url(#bg)"/>
+  <circle cx="1080" cy="40" r="170" fill="#ffffff" fill-opacity="0.05"/>
+  <circle cx="1140" cy="270" r="110" fill="#ffffff" fill-opacity="0.05"/>
+
+  <g transform="translate(86 78) scale(6.5)" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 4h2l2.4 10.2a1 1 0 0 0 1 .8h8.7a1 1 0 0 0 1-.8L20 8H6.2"/>
+    <circle cx="9.5" cy="19" r="1.4"/>
+    <circle cx="17" cy="19" r="1.4"/>
+  </g>
+
+  <text x="280" y="135" fill="#ffffff" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="58" font-weight="700">Smart Grocery Store</text>
+  <text x="282" y="180" fill="#ccfbf1" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="28">Management System built with Python lists and dictionaries</text>
+
+  <g font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#ffffff">
+    <rect x="282" y="208" width="130" height="36" rx="18" fill="#ffffff" fill-opacity="0.16"/>
+    <text x="347" y="232" text-anchor="middle">Python 3.8+</text>
+    <rect x="426" y="208" width="150" height="36" rx="18" fill="#ffffff" fill-opacity="0.16"/>
+    <text x="501" y="232" text-anchor="middle">Menu driven</text>
+    <rect x="590" y="208" width="170" height="36" rx="18" fill="#ffffff" fill-opacity="0.16"/>
+    <text x="675" y="232" text-anchor="middle">Input validation</text>
+  </g>
+</svg>
